@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="icon" href="{% static 'image/fav.ico' %}">
+    <title>摩天阶-首页</title>
+
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
+    <script src="{% static 'js/unslider.min.js' %}"></script>
+    <script src="https://cdn.bootcss.com/scrollup/2.4.0/jquery.scrollUp.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <style>
+        html, body {
+            font-family: Segoe, " segoe ui", "DejaVu Sans", "Trebuchet MS", verdana, sans-serif;
+        }
+
+        ul, ol {
+            padding: 0;
+        }
+
+        .banner {
+            position: relative;
+            overflow: auto;
+            text-align: center;
+        }
+
+            .banner li {
+                list-style: none;
+            }
+
+            .banner ul li {
+                float: left;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">摩天阶</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">合作</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">团队</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">求职</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="您需要什么帮助？" aria-label="Search">
+                    <button type="submit" class="btn btn-default fa fa-search"></button>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <style>
+        #b06 {
+            width: 640px;
+        }
+
+            #b06 .dots {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 20px;
+            }
+
+                #b06 .dots li {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    margin: 0 4px;
+                    text-indent: -999em;
+                    border: 2px solid #fff;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    opacity: .4;
+                    -webkit-transition: background .5s, opacity .5s;
+                    -moz-transition: background .5s, opacity .5s;
+                    transition: background .5s, opacity .5s;
+                }
+
+                    #b06 .dots li.active {
+                        background: #fff;
+                        opacity: 1;
+                    }
+
+            #b06 .arrow {
+                position: absolute;
+                top: 200px;
+            }
+
+            #b06 #al {
+                left: 15px;
+            }
+
+            #b06 #ar {
+                right: 15px;
+            }
+    </style>
+    <div class="banner" id="b06" style="height:200px;">
+        <ul>
+            <li><img class="sliderimg" src="{% static "/image/s01.jpg" %}" alt="" style="width:100px"></li>
+            <li><img class="sliderimg" src="{% static "/image/s02.jpg" %}" alt="" style="width:100px"></li>
+            <li><img class="sliderimg" src="{% static "/image/s03.jpg" %}" alt="" style="width:100px"></li>
+        </ul>
+        <a href="javascript:void(0);" class="unslider-arrow06 prev"><img class="arrow" id="al" src="{% static "/image/arrowl.png" %}" alt="prev" width="20" height="35"></a>
+        <a href="javascript:void(0);" class="unslider-arrow06 next"><img class="arrow" id="ar" src="{% static "/image/arrowr.png" %}" alt="next" width="20" height="37"></a>
+    </div>
+    <div class="container">
+        <div class="row clearfix" style="margin-top:20px">
+            <div class="col-md-4 column">
+                <div class="row clearfix">
+
+                    <div class="col-md-6 column">
+                        <div><a href="#"><i class="fa fa-graduation-cap" style="font-size:100px;color:darkgreen"></i></a></div><div></div>
+                    </div>
+                    <div class="col-md-6 column">
+                        <h5>可供选择的学校</h5>
+                        <h5>学校概况</h5>
+                        <h5>导师概况</h5>
+                    </div>
+                    <button style="margin-top:20px" type="button" class="btn btn-lg btn-success btn-block" onclick="gotoProfessor()">深造</button>
+                </div>
+
+            </div>
+            <div class="col-md-4 column"></div>
+            <div class="col-md-4 column">
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+
+                        <a href="#"><i class="fa fa-group" style="font-size:100px;color:darkgreen"></i></a>
+                    </div>
+                    <div class="col-md-6 column">
+                        <h5>可供选择的公司</h5>
+                        <h5>公司概况</h5>
+                        <h5>导师概况</h5>
+                    </div>
+                    <button style="margin-top:20px" type="button" class="btn btn-lg btn-success btn-block">求职</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container" style="text-align:center">
+            <span class="text-muted">Copyright &copy; 2017&nbsp;&nbsp;<strong><a href="http://gap3.cn/" target="_blank">摩天阶</a></strong>&nbsp;<strong></strong> All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="{% static "../../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script type=text/javascript>
+        function imgReload() {
+            var imgHeight = 0;
+            var wtmp = $("body").width();
+            $("#b06 ul li").each(function () {
+                $(this).css({ width: wtmp + "px" });
+            });
+            $(".sliderimg").each(function () {
+                $(this).css({ width: wtmp + "px" });
+                imgHeight = $(this).height();
+            });
+        }
+        $(window).resize(function () { imgReload(); });
+        $(document).ready(function (e) {
+            imgReload();
+            var unslider06 = $('#b06').unslider({
+                dots: true,
+                fluid: true
+            }),
+            data06 = unslider06.data('unslider');
+            $('.unslider-arrow06').click(function () {
+                var fn = this.className.split(' ')[1];
+                data06[fn]();
+            });
+        });
+		
+		function gotoProfessor()
+		{
+                var arr1={{ results }};
+
+                var index1 = Math.floor((Math.random()*arr1.length));
+                var arr2=arr1[index1].dpts;
+                $.getJSON("{% url 'index:getdpts' %}",{short:arr1[index1].short},function(data){
+
+                        var index2 = Math.floor((Math.random()*data.length));
+                        window.location.href="{% url 'tutors:gettutors' %}"+"?short="+arr1[index1].short+"&dpt="+data[index2];
+
+
+                      }); 
+
+		}
+    </script>
+</body>
+</html>

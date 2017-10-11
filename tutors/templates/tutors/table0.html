@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+{% load static %}
+{% load myfilter %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static "image/fav.ico" %}">
+    <title>摩天阶-导师情况</title>
+
+       <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/sticky-footer-navbar.css" %}" rel="stylesheet">
+    <script src="{% static "js/unslider.min.js" %}"></script>
+
+    <script src="https://cdn.bootcss.com/scrollup/2.4.0/jquery.scrollUp.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+
+    <style>
+    </style>
+<script charset="UTF-8">
+    
+$(document).ready(function(){
+
+  $("#schools option[value='{{ short }}']").attr("selected", true);
+
+  var id = $('#schools').val();
+  $.getJSON("{% url 'tutors:getdpts' %}",{short:id},function(data){
+      for(var key in data){
+         var content=''
+         $.each(data[key], function(i, item){
+            content+="<option value="+item+">"+item+"</option>"
+         });        	
+       };
+       $('#dpts').html(content);
+       $("#dpts option[value='{{ dpt }}']").attr("selected", true);
+  });
+   
+
+  $('#schools').change(function(){
+    var id = $('#schools').val();
+    if(id==0){    	
+    	$('#dpts').html(content);
+    	$("#dpts option[value=0]").attr("selected", true); 
+    }else{
+        $.getJSON("{% url 'tutors:getdpts' %}",{short:id},function(data){
+          
+          for(var key in data){
+            var content=''  
+            $.each(data[key], function(i, item){
+              content+="<option value="+item+">"+item+"</option>"
+           });        	
+         };
+         $('#dpts').html(content);
+       });
+    };
+  });
+});
+$(document).ready(function(){
+  $('input').click(function(){
+    var s= $('#schools').val();
+    var d= $('#dpts').val();
+    if(s==0){
+      alert("请先选择学校！");
+    }else if(d==0){
+      alert("请继续选择院系！")
+    }else{
+      var dd= encodeURI(d);
+      var link="{% url 'tutors:gettutors' %}"+"?short="+s+"&dpt="+dd;
+      $("#alink").attr("href", link); 
+      $("#spanlink").click(); 
+      return false; 
+      };
+    });
+  });
+
+
+</script>
+</head>
+<body>
+    <div class="container">
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">摩天阶</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">合作</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">团队</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+
+
+        <div class="row clearfix">
+			
+		<div class="col-md-12 column" style="margin-bottom:20px;background-color:#F5F5F5;border-top:1px dashed #ccc;height:30px;overflow:hidden;">
+		</div>
+		<div class="col-md-12 column" style="overflow:hidden;">
+		
+		<div class="form-group">
+    <div class="row">
+        <div class="col-md-3">
+            <select class="form-control" id="schools">             
+                {% for i in results %}
+                <option value="{{ i.short }}">{{ i.university }}</option>
+                {% endfor %}
+		</select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control" id="dpts">			
+                 <option value="{{ dpt }}">{{ dpt }}</option>
+		</select>
+        </div>
+		 <div class="col-md-3">
+                 <input type="button" class="btn btn-success fa fa-search" value="搜索" />
+                 <a href="" id="alink" target="_blank" style="display: none"><span id="spanlink">test</span></a>
+
+                 </div>
+    </div>
+</div>
+		</div>
+		
+		
+		<div class="col-md-12 column" style="background-color:#F5F5F5;border-bottom:1px dashed #ccc;height:30px;overflow:hidden;">
+		</div>
+		{% for tutor in tutors %}
+            <div class="col-md-12 column" style="margin:10px;border-bottom:1px dashed #ccc;height:160px;overflow:hidden;">
+                <div class="row clearfix">
+                
+		
+                    <div class="col-md-2 column">
+                        <img style="width:100px;height:150px" src="{% static "" %}">
+                    </div>
+                    <div class="col-md-8 column">
+                        <h6>{% if tutor|key:"url" %}<a target="_blank" href="{{ tutor.url }}">{{ tutor.name }}</a>{% endif %} {% if tutor|key:"field" %}&nbsp;&nbsp;{{ tutor.field }}{% endif %}{% if tutor|key:"filed" %}&nbsp;&nbsp;{{ tutor.filed }}{% endif %}</h6>
+                        
+                        <p style="font-size:12px;color:#666;">{% if tutor|key:"title" %}{{ tutor.title}}{% endif %}</p>
+                        <p style="font-size:12px;color:#666;">
+                            
+                        </p>
+                        <p style="font-size:12px;color:#666;">
+                            
+                        </p>
+                        <p style="font-size:12px;color:#666;">
+                           
+                        </p>
+                    </div>
+                    <div class="col-md-2 column">
+                        <a title="个人信息" href={{ tutor.url }}><i style="color:darkgreen" class="fa fa-address-card"></i></a>
+                        
+                            <a title="学生资源" href="{% url "students:getstu" short dpt tutor.name %}"><i style="color:black" class="fa fa-graduation-cap"></i></a>
+                        
+                        
+                            <a title="评价"><i style="color:orange" class="fa fa-star"></i></a>
+                        
+                    </div>
+                </div>
+            </div>{% endfor %}
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container" style="text-align:center">
+            <span class="text-muted">Copyright &copy; 2017&nbsp;&nbsp;<strong><a href="http://gap3.cn/" target="_blank">摩天阶</a></strong>&nbsp;<strong></strong> All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="{% static "js/jquery.min.js" %}"><\/script>')</script>-->
+    <script src="{% static "js/popper.min.js" %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+
+    <script type=text/javascript>
+        function imgReload() {
+            var imgHeight = 0;
+            var wtmp = $("body").width();
+            $("#b06 ul li").each(function () {
+                $(this).css({ width: wtmp + "px" });
+            });
+            $(".sliderimg").each(function () {
+                $(this).css({ width: wtmp + "px" });
+                imgHeight = $(this).height();
+            });
+        }
+        $(window).resize(function () { imgReload(); });
+        $(document).ready(function (e) {
+            imgReload();
+            var unslider06 = $('#b06').unslider({
+                dots: true,
+                fluid: true
+            }),
+            data06 = unslider06.data('unslider');
+            $('.unslider-arrow06').click(function () {
+                var fn = this.className.split(' ')[1];
+                data06[fn]();
+            });
+        });
+    </script>
+</body>
+</html>

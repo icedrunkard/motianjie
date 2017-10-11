@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<meta content="always" name="referrer">
+<style>
+body{ width:1000px;} 
+.div{width:1000px;height:30px; border:0px solid #F00} 
+</style> 
+</head>
+<body>
+{% load myfilter %}
+    <p>teachers of {{university}}/{{dpt}} :</p>
+
+
+
+        {% for tutor in tutors %}
+
+		
+            <div class='div'>
+		<div style='width:200px;height:20px;float:left;'>{% if tutor|key:"url" %}<a target="_blank" href={{ tutor.url }}>{{ tutor.name }}</a>{% endif %}</div>  
+		
+		
+		<div style='width:200px;float:left;'>{% if tutor|key:"field" %}{{ tutor.field }}{% endif %} </div>
+		 
+		
+		<div style='width:400px;float:left;'>{% if tutor|key:"title" %}{{ tutor.title}}{% endif %}</div>
+		
+                <div style='width:200px;float:left;'><a target="_blank" href='{% url "students:getstu" short dpt tutor.name %}'>可能的学生信息</a></div>
+         
+            </div>
+
+        {% endfor %}
+
+</body>
+</html>
+

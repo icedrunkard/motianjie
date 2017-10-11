@@ -1,0 +1,119 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<meta content="always" name="referrer">
+<title>gap3</title> 
+
+
+    <style>
+	.content
+	{
+
+		padding:20px 10%;
+
+		width:1000px;
+
+	
+	}
+	.header
+	{
+
+		padding:20px 0 0 0;
+
+		width:1000px;
+
+	
+	}
+	.piece
+	{
+
+		padding:1% 2%;
+		background-color:#EEEEEE;
+		width:950px;
+		transition:width 0.1s;
+		-moz-transition:width 0.1s; /* Firefox 4 */
+		-webkit-transition:width 0.1s; /* Safari and Chrome */
+		-o-transition:width 0.1s; /* Opera */
+
+	
+	}
+	.piece:hover
+	{
+		border:1px solid #EEEEEE;
+		padding:1% 2%;
+		background-color:#EEEEEE;
+		box-shadow:5px 5px 5px;
+		width:950px;
+
+	
+	}
+    </style>
+</head>
+<body style="width:1000px;">
+
+    <div class="header" style="padding:0 0 0 10%;">
+        <span style="font-size:30px;width:200px;"><strong>{{tutor}}</strong></span>
+	<span style="font-size:20px;width:200px;">的学生</span>
+	<span style="font-size:20px;width:200px;padding:0 0 0 300px">{{university}}</span>
+	<span style="font-size:18px;">：</span>
+	<span style="font-size:15px;width:200px;">{{dpt}}</span>
+    </div> 
+<hr style="width:1150px;padding:0 0 0 0px">
+
+
+<div class="content" style="padding:1% 10%;">
+{% load myfilter %}
+        {% for item in result %}
+	{% if item|key:"edu" and item|key:"exp" %}
+    	<div class="piece">
+
+		    <h3>{{ item|key:"name" }} </h3>
+
+		    {% if item|key:"edu" %}
+		      <h4>教育背景</h4>
+		        {% for each in item|key:"edu" %}
+		            {% if each|key:"school_name" %}
+                	    <p><span>{{ each|key:"school_name" }}</span>
+		                {% if each|key:"date_range" %}
+                	        <span>{{ each|key:"date_range" }}</span>
+		                    {% if each|key:"degree_name" %}
+                	            <span>{{ each|key:"degree_name" }}</span></p>
+			    	    {% endif %}
+			        {% endif %}
+			    {% endif %}
+			{% endfor %}
+       		    {% endif %}
+
+
+
+		    {% if item|key:"exp" %}
+			<h4>工作经历</h4>
+		        {% for each in item|key:"exp" %}
+		            {% if each|key:"company_name" %}
+
+                	    <p><span>{{ each|key:"company_name" }}</span>
+		                {% if each|key:"date_range" %}
+				    {% for part in each|key:"date_range" %}
+                	                <span>{{ part }}</span>
+				    {% endfor %}
+		                    {% if each|key:"position_title" %}
+                	            <span>{{ each|key:"position_title" }}</span></p>
+			    	    {% endif %}
+			        {% endif %}
+			    {% endif %}
+			{% endfor %}
+       		    {% endif %}
+
+		
+            </div>
+	{% endif %}
+	<div><h6></h6></div>
+        {% endfor %}
+</div>
+
+
+</body>
+</html>

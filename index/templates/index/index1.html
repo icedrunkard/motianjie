@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+  <meta charset="utf-8">
+  <title>摩天阶</title>
+  <style>
+    body{background-color: white; width:99%;}
+    .logo{float:left;margin-top:0px;}
+    .menu{min-width:500px;float:left;margin-top:0px;text-decoration:none;}
+    .menu a{margin-left:1em;font-size:1.2em;}
+    .select{float:left;margin-left:0em;margin-top:0px;}
+    select{float:left;min-width:150px;font-size:1em;border:0.5px solid #F00} 
+  </style>
+<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#schools option[value=0]").attr("selected", true);
+  $("#dpts option[value=0]").attr("selected", true); 
+  $('#schools').change(function(){
+    var id = $('#schools').val();
+    if(id==0){
+    	var content='<option value=0>请选择院系</option>';
+    	$('#dpts').html(content);
+    	$("#dpts option[value=0]").attr("selected", true); 
+    }else{
+        $.getJSON("{% url 'index:getdpts' %}",{short:id},function(data){
+          var content='<option value=0>请选择院系</option>';
+          for(var key in data){
+            $.each(data[key], function(i, item){
+              content+='<option value='+item+'>'+item+'</option>'
+           });        	
+         };
+         $('#dpts').html(content);
+       });
+    };
+  });
+});
+$(document).ready(function(){
+  $('input').click(function(){
+    var s= $('#schools').val();
+    var d= $('#dpts').val();
+    if(s==0){
+      alert("请先选择学校！");
+    }else if(d==0){
+      alert("请继续选择院系！")
+    }else{
+      var link="{% url 'tutors:gettutors' %}"+"?short="+s+"&dpt="+d;
+      $("#alink").attr("href", link); 
+      $("#spanlink").click(); 
+      return false; 
+      };
+    });
+  });
+
+
+</script>
+</head>
+{% load static %}
+<body>
+<div>
+    <div class="logo">
+		<img src="{% static "logo.png" %}"></img>
+    </div> 
+    <div style="width:100%;text-align:right;font-size:20px;">
+		<a href="" style="color: #ffc000;">登录</a>
+		<a href="" style="color: #ffc000;">注册</a>
+    </div>
+</div>
+<div style="width:100%;text-align:center;height:80px;">
+     
+      <div class="menu">
+		<a href="" style="margin-left:-8em;">首页</a>
+		<a href="">介绍</a>
+		<a href="">合作</a>
+		<a href="">团队</a>
+		<a href="">求职</a>
+      </div>
+      <div class="select">
+        
+          <select id="schools">
+            <option value=0>请选择学校</option>
+            {% for i in results %}
+            <option value="{{ i.short }}">{{ i.university }}</option>
+            {% endfor %}
+          </select>
+
+          <select id="dpts">
+           <option value=0>请选择院系</option>
+          </select>
+          <input type="button" value="搜索" />
+          <a href="" id="alink" target="_blank" style="display: none"><span id="spanlink">test</span></a>
+        </div>  
+</div>
+
+<div class="banner" style="background-image: url({% static 'banner.png' %}); width:100%;height:400px;">
+    <div style="float:left;width:90%">
+	<p style="color: white; font-size:2em; font-family: YouYuan; float: left; margin: 4em 0 0 20%;">从前辈那里得到启示</p><br />
+	<p style="color: white; font-size:2em; font-family: YouYuan; float: left; margin: 0 0 0 50%;">让自己把握未来</p>
+    </div>
+
+</div>
+<div class="container" style="width:100%; height: 850px;">
+	<div style="text-align:center;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 0%;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 25%;">
+	</div>
+	<div style="text-align:center;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 0%;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 25%;">
+	</div>
+	<div style="text-align:center;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 0%;">
+	<img src="{% static "circle.png" %}" style="margin: 15% 0 0 25%;">
+	</div>
+</div>
+<div style="background-color: #c0c0c0; height: 20em;">
+	<a href="" style="color: white; font-size: 25px; float: right; margin: 2% 30%; text-decoration: none;">联系我们</a>
+</div>
+</body>
+</html>
